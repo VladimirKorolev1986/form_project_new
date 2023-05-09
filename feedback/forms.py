@@ -8,6 +8,6 @@ class FeedbackForm(forms.Form):
         'required': 'Укажите  хотя бы один символ'
 
     })
-    # surname = forms.CharField()
-    # feedback = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'cols': 40}))
+    surname = forms.CharField(label='Фамилия')
+    feedback = forms.CharField(label='Отзыв', widget=forms.Textarea(attrs={'rows': 2, 'cols': 40}))
     rating = forms.IntegerField(label='Рейтинг', max_value=5, min_value=1)
