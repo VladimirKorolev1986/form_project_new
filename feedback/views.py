@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from .forms import FeedbackForm
 from .models import Feedback
 from django.views import View
+from django.views.generic.base import TemplateView
 
 
 class FeedBackView(View):
@@ -31,13 +32,18 @@ class FeedBackView(View):
 #         form = FeedbackForm()
 #     return render(request, 'feedback/feedback.html', context={'form': form})
 
-class DoneView(View):
-    def get(self, request):
-        return render(request, 'feedback/done.html')
+class DoneView(TemplateView):
+    template_name = 'feedback/done.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['name'] = 'Ivanov'
+        context['date'] = '23.04.2022'
+        return context
 
 
-def done(request):
-    return render(request, 'feedback/done.html')
+# def done(request):
+#     return render(request, 'feedback/done.html')
 
 
 class UpdateFeedBack(View):
@@ -67,3 +73,11 @@ class UpdateFeedBack(View):
 #     else:
 #         form = FeedbackForm(instance=feed)
 #     return render(request, 'feedback/feedback.html', context={'form': form})
+
+class ListFeedBack(TemplateView):
+    template_name = 'feedback/list_feedback.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['list'] = Feedback.objects.all()
+        return context
