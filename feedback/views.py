@@ -4,6 +4,7 @@ from .forms import FeedbackForm
 from .models import Feedback
 from django.views import View
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView
 
 
 class FeedBackView(View):
@@ -62,6 +63,7 @@ class UpdateFeedBack(View):
         form = FeedbackForm(instance=feed)
         return render(request, 'feedback/feedback.html', context={'form': form})
 
+
 # def update_feedback(request, id_feedback):
 #     feed = Feedback.objects.get(id=id_feedback)
 #     if request.method == 'POST':
@@ -74,10 +76,28 @@ class UpdateFeedBack(View):
 #         form = FeedbackForm(instance=feed)
 #     return render(request, 'feedback/feedback.html', context={'form': form})
 
-class ListFeedBack(TemplateView):
+# class ListFeedBack(TemplateView):
+#     template_name = 'feedback/list_feedback.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['list'] = Feedback.objects.all()
+#         return context
+
+class ListFeedBack(ListView):
     template_name = 'feedback/list_feedback.html'
+    model = Feedback
+    context_object_name = 'feedbacks'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
+
+
+class DetailFeedBack(TemplateView):
+    template_name = 'feedback/detail_feedback.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['list'] = Feedback.objects.all()
+        context['write'] = Feedback.objects.get(id=kwargs['id_feedback'])
         return context

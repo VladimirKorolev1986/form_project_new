@@ -5,22 +5,14 @@
 {% endblock %}
 
 {% block content %}
-<table>
-    <tr>
-        <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Отзыв</th>
-        <th>Рейтинг</th>
-    </tr>
-        {% for i in list %}
-        <tr>
-            <td>{{ i.name }}</td>
-            <td>{{ i.surname }}</td>
-            <td>{{ i.feedback }}</td>
-            <td>{{ i.rating }}</td>
-        </tr>
+<ol>
+        {% for i in feedbacks %}
+
+           <li> {{ i.name }} -  {{ i.surname }}: {{ i.rating }}   </li>
+
+
 
         {% endfor %}
-</table>
+</ol>
 {% endblock %}
 
